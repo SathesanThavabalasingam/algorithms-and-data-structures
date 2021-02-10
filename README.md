@@ -26,12 +26,6 @@
 
 #### What follows are the notes I kept throughout taking the course. 
 
-##### Keep in mind they were only meant to be personal notes and as such are NOT proofread, double-checked, etc. So, expect mistakes. 
-
-##### If you're looking for something more refined, much more well put together, organized, and thorough resources are out there, such as this repo https://github.com/LeftHandRobotics/javascript-algorithms (in fact, the charts in Section 2 are taken from that page). 
-
-##### Having said that, if you'd like to make a correction, make a PR or contact me.
-
 As these are course notes, the sections are more-or-less organized according to the course lectures. You'll note that there are code snippets throughout, as examples of the relevant material. Keep in mind that as the course went on, I began to remove white space and comments from these snippets in a futile attempt at brevity; so, if you're looking for something more comprehensive / readable, it's suggested you refer to the actual code in the relevant section folder. 
 
 ### TOC
@@ -300,6 +294,7 @@ def sumZero(arr):
 
 sumZero([-4,-3,-2,-1,0,1,2,3,19])
 ```
+- We can also check out an example of using multiple pointers at opposing sides of the array.
 
 ```python
 def countUniqueValues(arr):
