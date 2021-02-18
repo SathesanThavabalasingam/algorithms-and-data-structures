@@ -430,17 +430,25 @@ bubbleSort([37,45,29,8])
 ```
 
 - Due to nested arrays, typically **O(n^2)**; however with a nearly sorted array, can be O(n). As such, Bubble Sort tends to only be useful when dealing with arrays that are very nearly sorted.
+- In the optimized version below, we have a partially sorted array. "noSwap" is true initially, but if we 
+get through the entire second loop without making a swap it remains true and we break out of the loop to 
+ensure that we don't need to keep going through an already sorted array. 
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+def bubbleSort(arr):
+    for i in range(len(arr)-1):
+        noSwap = True
+        for j in range(len(arr)-1 -i):
+            if arr[j] > arr[j+1]:
+                temp = arr[j]
+                arr[j] = arr[j+1]
+                arr[j+1] = temp
+                noSwap = False
+        if noSwap == True:
+            break
+    return arr
+            
+bubbleSort([8,1,2,3,4,5,6,7])
 ```
 
 
