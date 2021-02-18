@@ -409,19 +409,6 @@ searchArray([1,2,3,4,5,6,9,55],4)
   - If **positive, a after b**
   - If zero, a and b are the same as far as the sort is concerned.
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
-
-
 
 #### Bubble Sort
 
@@ -430,15 +417,16 @@ searchArray([1,2,3,4,5,6,9,55],4)
 - Many sorting algorithms involve some type of swapping. How do we swap in JS?
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+def bubbleSort(arr):
+    for i in range(len(arr)-1):
+        for j in range(len(arr)-1 -i):
+            if arr[j] > arr[j+1]:
+                temp = arr[j]
+                arr[j] = arr[j+1]
+                arr[j+1] = temp
+    return arr
+            
+bubbleSort([37,45,29,8])
 ```
 
 - Due to nested arrays, typically **O(n^2)**; however with a nearly sorted array, can be O(n). As such, Bubble Sort tends to only be useful when dealing with arrays that are very nearly sorted.
