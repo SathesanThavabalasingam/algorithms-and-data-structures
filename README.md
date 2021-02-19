@@ -456,18 +456,21 @@ bubbleSort([8,1,2,3,4,5,6,7])
 
 - Similar to Bubble Sort, but instead of first placing large values into sorted position, it **places small values into sorted position**
 - Time complexity is **O(n^2)** with a best case of O(n) (like Bubble Sort)
-- The only situation where Selection Sort may be considered more useful than Bubble, is if for some reason we want to minimize the amount of swaps me make.
+- The only situation where Selection Sort may be considered more useful than Bubble, is if for some reason we want to minimize the amount of swaps we make.
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+def selectionSort(arr):
+    for i in range(len(arr) - 1):
+        lowest = i
+        for j in range(i+1,len(arr)):
+            if arr[j] < arr[lowest]:
+                lowest = j
+        temp = arr[i]
+        arr[i] = arr[lowest]
+        arr[lowest] = temp
+    return arr
+
+selectionSort([34,22,10,19,17])
 ```
 
 
