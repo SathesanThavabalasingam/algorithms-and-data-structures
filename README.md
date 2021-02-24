@@ -485,15 +485,26 @@ selectionSort([34,22,10,19,17])
   - One thing Insertion Sort is good at is sorting data continuously as it comes in (eg streaming), as it's considered an **Online Algorithm.**
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+def insertionSort(array):
+
+    # We start from 1 since the first element is trivially sorted
+    for index in range(1, len(array)):
+        currentValue = array[index]
+        currentPosition = index
+
+        # As long as we haven't reached the beginning and there is an element
+        # in our sorted array larger than the one we're trying to insert - move
+        # that element to the right
+        while currentPosition > 0 and array[currentPosition - 1] > currentValue:
+            array[currentPosition] = array[currentPosition -1]
+            currentPosition = currentPosition - 1
+
+
+        # We have either reached the beginning of the array or we have found
+        # an element of the sorted array that is smaller than the element
+        # we're trying to insert at index currentPosition - 1.
+        # Either way - we insert the element at currentPosition
+        array[currentPosition] = currentValue
 ```
 
 
@@ -515,35 +526,51 @@ selectionSort([34,22,10,19,17])
 
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+def mergeSort(myList):
+    if len(myList) > 1:
+        mid = len(myList) // 2
+        left = myList[:mid]
+        right = myList[mid:]
+
+        # Recursive call on each half
+        mergeSort(left)
+        mergeSort(right)
+
+        # Two iterators for traversing the two halves
+        i = 0
+        j = 0
+        
+        # Iterator for the main list
+        k = 0
+        
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+              # The value from the left half has been used
+              myList[k] = left[i]
+              # Move the iterator forward
+              i += 1
+            else:
+                myList[k] = right[j]
+                j += 1
+            # Move to the next slot
+            k += 1
+
+        # For all the remaining values
+        while i < len(left):
+            myList[k] = left[i]
+            i += 1
+            k += 1
+
+        while j < len(right):
+            myList[k]=right[j]
+            j += 1
+            k += 1
+
+myList = [54,26,93,17,77,31,44,55,20]
+mergeSort(myList)
+print(myList)
+
 ```
-
-
-- Now that we have our Merge helper function, we can write the entire Merge Sort algorithm. It should go something like this:
-  - Break up the array into halves until you have arrays that are empty or have one element
-  - Once you have smaller sorted arrays, merge those arrays with other sorted arrays until you are back at the full length of the array.
-  - Then return the merged and sorted array.
-
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
-
 
 #### Quick Sort
 
@@ -563,32 +590,55 @@ selectionSort([34,22,10,19,17])
   - Thus, if you know you may receive a sorted list, it is better to pick a value in the middle. Typically choosing a random value or the median is the best strategy (when your inputs may be both unsorted or sorted).
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
+def quick_sort(arr):
+    
+    quick_sort_help(arr,0,len(arr)-1)
 
-- Now that we have our Pivot Helper function, we can move on to implementing  the entire Quick Sort algorithm. It should go something like this:
-  - Call the pivot helper on the array
-  - When the helper returns to you the updated pivot index, recursively call the pivot helper on the subarray to the left of that index, and the subarray to the right of that index.
-  - Your base case occurs when you consider a subarray with less than 2 elements.
+def quick_sort_help(arr,first,last):
+    
+    if first<last:
+        
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+        splitpoint = partition(arr,first,last)
+
+        quick_sort_help(arr,first,splitpoint-1)
+        quick_sort_help(arr,splitpoint+1,last)
+
+
+def partition(arr,first,last):
+    
+    pivotvalue = arr[first]
+
+    leftmark = first+1
+    rightmark = last
+
+    done = False
+    while not done:
+
+        while leftmark <= rightmark and arr[leftmark] <= pivotvalue:
+            leftmark = leftmark + 1
+
+        while arr[rightmark] >= pivotvalue and rightmark >= leftmark:
+            rightmark = rightmark -1
+
+        if rightmark < leftmark:
+            done = True
+        else:
+            temp = arr[leftmark]
+            arr[leftmark] = arr[rightmark]
+            arr[rightmark] = temp
+
+    temp = arr[first]
+    arr[first] = arr[rightmark]
+    arr[rightmark] = temp
+
+
+    return rightmark
+
+
+arr = [2,5,4,6,7,3,1,4,12,11]
+quick_sort(arr)
+arr
 ```
 
 
@@ -612,24 +662,7 @@ selectionSort([34,22,10,19,17])
 
 - Eg, if we are dealing with base 10 numbers, we create 10 buckets (0 - 9) and repeatedly (the number of times is equal to the max number of digits in our list of numbers) sort the numbers into the different buckets based on the numbers' individual digits.
 
-- In order to implement Radix Sort, **it's helpful to first build three helper functions**
-
-  - `getDigit(num, place)` - returns the digit in `num` at the given `place` value. Remember this refers to mathematics place value (eg 10s, 100s, etc)
-    - `gitDigit(18391, 1) === 9`
-
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
-
-- Now that we have our helper functions, we can implement the entire Radix Sort algorithm. It should go something like:
+- In order to implement Radix Sort:
 
   - Given a list of numbers,
   - Figure out how many digits the largest number has
@@ -642,15 +675,63 @@ selectionSort([34,22,10,19,17])
 
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+# function for radix sort
+def radixsort(MyList):
+  n = len(MyList)
+  max = MyList[0]
+  
+  #find largest element in the Array
+  for i in MyList:
+    if max < i:
+      max = i
+  
+  #Counting sort is performed based on place. 
+  #like ones place, tens place and so on.
+  place = 1
+  while max/place > 0:
+    countingsort(MyList, place)
+    place *= 10  
+
+def countingsort(MyList, place):
+  n = len(MyList)
+  output = [0 for i in range(0,n)]
+  
+  #range of the number is 0-9 for each place considered.
+  freq = [0 for i in range(0,10)]
+  
+  #count number of occurrences in freq array
+  for i in range(0,n):
+    freq[(MyList[i]//place)%10] += 1
+  
+  #Change count[i] so that count[i] now contains actual 
+  #position of this digit in output[] 
+  for i in range(1,10):
+    freq[i] += freq[i - 1]      
+  
+  #Build the output array 
+  for i in range(n-1,-1,-1):
+    output[freq[(MyList[i]//place)%10] - 1] = MyList[i] 
+    freq[(MyList[i]//place)%10] -= 1
+  
+  #Copy the output array to the input Array, Now the Array will 
+  #contain sorted array based on digit at specified place
+  for i in range(0,n): 
+    MyList[i] = output[i]   
+
+#print a list
+def PrintList(MyList):
+  for i in MyList:
+    print(i, end=" ")
+  print("\n") 
+  
+# test the code                 
+MyList = [101, 1, 20, 50, 9, 98, 27, 153, 35, 899]
+print("Original List")
+PrintList(MyList)
+
+radixsort(MyList)
+print("Sorted List")
+PrintList(MyList)
 ```
 
 
@@ -687,8 +768,18 @@ selectionSort([34,22,10,19,17])
   - Else, set the next property of the tail to point to the new node and then update the tail to be the new node
   - Increment the list's length by 1
   - Return the list
-
   
+
+```python
+def push(self, value):
+    if self.tail is None:
+        self.head = self.tail = Node(value)
+    else:
+        new_tail = Node(value)
+        self.tail.next = new_tail
+        new_tail.prev = self.tail
+        self.tail = new_tail
+```
 
 - **POP** goes like this:
 
@@ -700,15 +791,13 @@ selectionSort([34,22,10,19,17])
   - Return the list
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+def pop(self):
+    old_tail = self.tail
+    self.tail = self.tail.prev
+    if self.tail is not None:
+        self.tail.next = None
+    else: self.head = self.tail
+        return old_tail.value
 ```
 
 
@@ -736,15 +825,14 @@ selectionSort([34,22,10,19,17])
   - Return the list
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+def unshift(self, value):
+    if self.head is None:
+        self.head = self.tail = Node(value)
+    else:
+        new_head = Node(value)
+        self.head.prev = new_head
+        new_head.next = self.head
+        self.head = new_head
 ```
 
 
@@ -762,17 +850,6 @@ selectionSort([34,22,10,19,17])
   - If found, update the value and return true
   - Else, return false
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
 
 - **INSERT** goes like this:
 
@@ -795,17 +872,6 @@ selectionSort([34,22,10,19,17])
   - Decrement the length
   - Return the value of the node
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
 
 - **REVERSE** goes like this:
 
@@ -817,19 +883,7 @@ selectionSort([34,22,10,19,17])
   - Set the current node to the next node
   - Return the list once loop is done
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
   
-
 #### Doubly Linked List
 
 - Almost identical to Singly Linked List, except **every node has** **another** **pointer** that points **to the previous item**!
@@ -863,17 +917,6 @@ selectionSort([34,22,10,19,17])
   - Set the prev node next to null
   - Decrement length & Return value removed
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
 
 - **SHIFT** goes like this:
 
@@ -894,18 +937,6 @@ selectionSort([34,22,10,19,17])
   - Update head to be new node
   - Increment & Return list
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
-
 
 - **GET** goes like this:
 
@@ -921,17 +952,6 @@ selectionSort([34,22,10,19,17])
   - If get returns valid node, set the value of that node & Return true
   - Else, false
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
 
 
 - **INSERT** goes like this:
@@ -952,17 +972,6 @@ selectionSort([34,22,10,19,17])
   - Update next and prev appropriately (including on node to removed)
   - Decrement length & return node
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
 
 
 #### Stack
@@ -995,15 +1004,21 @@ selectionSort([34,22,10,19,17])
   - Decrement by 1, Return value of node removed
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+class Stack:
+
+    def __init__(self):
+        self.stack = []
+
+    def pop(self):
+        if len(self.stack) < 1:
+            return None
+        return self.stack.pop()
+
+    def push(self, item):
+        self.stack.append(item)
+
+    def size(self):
+        return len(self.stack)
 ```
 
 
@@ -1033,15 +1048,21 @@ selectionSort([34,22,10,19,17])
   - Decrement size by 1 and Return value of node dequeued
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+class Queue:
+
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, item):
+        self.queue.append(item)
+
+    def dequeue(self):
+        if len(self.queue) < 1:
+            return None
+        return self.queue.pop(0)
+
+    def size(self):
+        return len(self.queue) 
 ```
 
 
@@ -1098,15 +1119,19 @@ selectionSort([34,22,10,19,17])
   - If less, do the same for the left side
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+def find(self, val):
+    if(self.root != None):
+        return self._find(val, self.root)
+    else:
+        return None
+
+def _find(self, val, node):
+    if(val == node.v):
+        return node
+    elif(val < node.v and node.l != None):
+        self._find(val, node.l)
+    elif(val > node.v and node.r != None):
+        self._find(val, node.r)
 ```
   
 
@@ -1132,15 +1157,15 @@ selectionSort([34,22,10,19,17])
   - Return the variable with the stored values
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+def bfs(self, graph, start):
+    visited, queue = set(), [start]
+    while queue:
+        vertex = queue.pop()
+        if vertex not in visited:
+            visited.add(vertex)
+            # new nodes are added to end of queue
+            queue.extend(graph[vertex] - visited)
+    return visited
 ```
 
 
@@ -1174,15 +1199,35 @@ selectionSort([34,22,10,19,17])
   - If the node has a right prop, call the helper on it
 
 ```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
+# Preorder traversal
+# Root -> Left ->Right
+    def PreorderTraversal(self, root):
+        res = []
+        if root:
+            res.append(root.data)
+            res = res + self.PreorderTraversal(root.left)
+            res = res + self.PreorderTraversal(root.right)
+        return res
+
+# Postorder traversal
+# Left ->Right -> Root
+    def PostorderTraversal(self, root):
+        res = []
+        if root:
+            res = self.PostorderTraversal(root.left)
+            res = res + self.PostorderTraversal(root.right)
+            res.append(root.data)
+        return res
+
+# Postorder traversal
+# Left ->Right -> Root
+    def PostorderTraversal(self, root):
+        res = []
+        if root:
+            res = self.PostorderTraversal(root.left)
+            res = res + self.PostorderTraversal(root.right)
+            res.append(root.data)
+        return res
 ```
 
 
@@ -1414,15 +1459,3 @@ selectionSort([34,22,10,19,17])
   - **Tabulation** - **storing the result of a previous result in a table** (usually an array)
   - Usually done using iteration
   - Better space complexity can be achieved
-
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
