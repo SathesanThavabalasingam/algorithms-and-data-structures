@@ -1256,32 +1256,9 @@ def bfs(self, graph, start):
 
 - **Insertion** is performed by adding the new item to the end of the array and then allowing it to *bubble up* if necessary, ie compare it with its parent nodes and swap them if it is larger (for MaxBinaryHeap).
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
-  
-
 - **Removal** / **Extraction** is performed by removing the first element / root, placing the last element in its place, and then *bubbling down* / adjusting / sinking the element down to its correct place. 
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
+
 
 
 #### Priority Queue
@@ -1299,17 +1276,6 @@ def bfs(self, graph, start):
   - Enqueue method: given a value and priority, make a new node & sort it based off its priority
   - Dequeue method: remove root element, rearrange heap using priority, return removed root element.
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
 
 
 #### Hash Table
@@ -1382,17 +1348,7 @@ def bfs(self, graph, start):
       - If that vertex hasn't been visited yet, mark as visited and add to result list
       - Else, push all of its neighbors to the stack
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
+
   - **BFS** - visit neighbors and then backtrack. It's helpful to utilize a **queue** type data structure.
     - Accepting a starting vertex...
     - Create a queue (eg an array) & add starting vertex
@@ -1406,17 +1362,6 @@ def bfs(self, graph, start):
     - If not visited, mark it as visited and enqueue it
     - Once done looping, return result array
 
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
 
 
 ### Dijkstra's Algorithm
@@ -1431,18 +1376,6 @@ def bfs(self, graph, start):
   - For each neighboring node, we calculate the distance by summing the total edges that lead to the node we're checking *from the starting node*
   - If the new total distance to a node is less than the previous total, we store the new shorter distance for that node
   - Can be helpful to use a Priority Queue / Binary Heap!
-
-```python
-# 
-#
-#
-#
-#Update Python code
-#
-#
-#
-#
-```
 
 
 ### Dynamic Programming
